@@ -21,8 +21,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Message(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
-    message: str
+    messages: list[Message]
 
 @app.get("/")
 def home():
@@ -34,11 +38,12 @@ def chat(data: ChatRequest):
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
-            {
-                "role": "user",
-                "content": data.message
-            }
-        ]
+    {
+        "role": msg.role,
+        "content": msg.content
+    }
+          for msg in data.messages
+   ]
     )
 
     ai_reply = response.choices[0].message.content
