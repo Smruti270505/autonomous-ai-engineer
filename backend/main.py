@@ -1,3 +1,4 @@
+from tools.file_tool import create_file
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
@@ -35,15 +36,35 @@ def home():
 @app.post("/chat")
 def chat(data: ChatRequest):
 
+    latest_message = data.messages[-1].content.lower()
+
+    if "create file" in latest_message or "create a file" in latest_message:
+
+        parts = latest_message.split()
+
+        filename = "new_file.txt"
+
+        if len(parts) >= 3:
+            filename = parts[2]
+
+        result = create_file(
+            filename,
+            "This file was created by AI agent."
+        )
+
+        return {
+            "response": result
+        }
+
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
-    {
-        "role": msg.role,
-        "content": msg.content
-    }
-          for msg in data.messages
-   ]
+            {
+                "role": msg.role,
+                "content": msg.content
+            }
+            for msg in data.messages
+        ]
     )
 
     ai_reply = response.choices[0].message.content
