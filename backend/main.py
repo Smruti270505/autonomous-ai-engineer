@@ -1,4 +1,5 @@
-from tools.file_tool import create_file
+from tools.tool_router import run_tool
+from tools.tool_registry import TOOLS
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
@@ -37,17 +38,37 @@ def home():
 def chat(data: ChatRequest):
 
     latest_message = data.messages[-1].content.lower()
+    if "what tools" in latest_message or "available tools" in latest_message:
 
+        tool_list = []
+
+        for tool_name, tool_data in TOOLS.items():
+
+            description = tool_data["description"]
+
+            tool_list.append(
+                f"{tool_name} - {description}"
+            )
+
+        return {
+            "response": "\n".join(tool_list)
+        }
+
+    # CREATE FILE TOOL
     if "create file" in latest_message or "create a file" in latest_message:
 
         parts = latest_message.split()
 
         filename = "new_file.txt"
 
-        if len(parts) >= 3:
+        if "create a file" in latest_message and len(parts) >= 4:
+            filename = parts[3]
+
+        elif "create file" in latest_message and len(parts) >= 3:
             filename = parts[2]
 
-        result = create_file(
+        result = run_tool(
+            "create_file",
             filename,
             "This file was created by AI agent."
         )
@@ -56,6 +77,24 @@ def chat(data: ChatRequest):
             "response": result
         }
 
+    # CALCULATE TOOL
+    if "calculate" in latest_message:
+
+        expression = latest_message.replace(
+            "calculate",
+            ""
+        )
+
+        result = run_tool(
+            "calculate",
+            expression
+        )
+
+        return {
+            "response": result
+        }
+
+    # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[

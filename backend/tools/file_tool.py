@@ -1,20 +1,12 @@
-if "create file" in latest_message or "create a file" in latest_message:
+import os
 
-    parts = latest_message.split()
+def create_file(filename, content):
 
-    filename = "new_file.txt"
+    os.makedirs("generated", exist_ok=True)
 
-    if len(parts) >= 4:
-        filename = parts[3]
+    path = os.path.join("generated", filename)
 
-    elif len(parts) >= 3:
-        filename = parts[2]
+    with open(path, "w") as file:
+        file.write(content)
 
-    result = create_file(
-        filename,
-        "This file was created by AI agent."
-    )
-
-    return {
-        "response": result
-    }
+    return f"File '{filename}' created successfully."
