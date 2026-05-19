@@ -1,3 +1,4 @@
+from tools.intent_detector import detect_tool
 from tools.tool_router import run_tool
 from tools.tool_registry import TOOLS
 from fastapi import FastAPI
@@ -38,6 +39,7 @@ def home():
 def chat(data: ChatRequest):
 
     latest_message = data.messages[-1].content.lower()
+    detected_tool = detect_tool(latest_message)
     if "what tools" in latest_message or "available tools" in latest_message:
 
         tool_list = []
@@ -55,9 +57,9 @@ def chat(data: ChatRequest):
         }
 
     # CREATE FILE TOOL
-    if "create file" in latest_message or "create a file" in latest_message:
+        if detected_tool == "create_file":
 
-        parts = latest_message.split()
+         parts = latest_message.split()
 
         filename = "new_file.txt"
 
@@ -78,7 +80,7 @@ def chat(data: ChatRequest):
         }
 
     # CALCULATE TOOL
-    if "calculate" in latest_message:
+    if detected_tool == "calculate":
 
         expression = latest_message.replace(
             "calculate",
