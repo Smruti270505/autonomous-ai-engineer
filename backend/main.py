@@ -56,10 +56,11 @@ def chat(data: ChatRequest):
             "response": "\n".join(tool_list)
         }
 
-    # CREATE FILE TOOL
-        if detected_tool == "create_file":
+    
+          # CREATE FILE TOOL
+    if detected_tool == "create_file":
 
-         parts = latest_message.split()
+        parts = latest_message.split()
 
         filename = "new_file.txt"
 
@@ -78,7 +79,6 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
-
     # CALCULATE TOOL
     if detected_tool == "calculate":
 
@@ -95,7 +95,54 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+    # TIME TOOL
+    if detected_tool == "time":
 
+        result = run_tool("time")
+
+        return {
+            "response": result
+        }
+        # READ FILE TOOL
+    if detected_tool == "read_file":
+
+        parts = latest_message.split()
+
+        filename = parts[-1]
+
+        result = run_tool(
+            "read_file",
+            filename
+        )
+
+        return {
+            "response": result
+        }
+
+    # LIST FILES TOOL
+    if detected_tool == "list_files":
+
+        result = run_tool("list_files")
+
+        return {
+            "response": result
+        }
+
+    # DELETE FILE TOOL
+    if detected_tool == "delete_file":
+
+        parts = latest_message.split()
+
+        filename = parts[-1]
+
+        result = run_tool(
+            "delete_file",
+            filename
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
