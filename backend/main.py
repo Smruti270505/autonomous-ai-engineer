@@ -143,6 +143,95 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+        # UPDATE FILE TOOL
+    if detected_tool == "update_file":
+
+        parts = latest_message.split()
+
+        filename = parts[2]
+
+        result = run_tool(
+            "update_file",
+            filename,
+            "Updated by AI agent."
+        )
+
+        return {
+            "response": result
+        }
+
+    # RENAME FILE TOOL
+    if detected_tool == "rename_file":
+
+        parts = latest_message.split()
+
+        old_name = parts[2]
+        new_name = parts[3]
+
+        result = run_tool(
+            "rename_file",
+            old_name,
+            new_name
+        )
+
+        return {
+            "response": result
+        }
+
+    # DIRECTORY INFO TOOL
+    if detected_tool == "directory_info":
+
+        result = run_tool(
+            "directory_info"
+        )
+
+        return {
+            "response": result
+        }
+
+    # ECHO TOOL
+    if detected_tool == "echo":
+
+        text = latest_message.replace(
+            "echo",
+            ""
+        )
+
+        result = run_tool(
+            "echo",
+            text
+        )
+
+        return {
+            "response": result
+        }
+
+    # RANDOM NUMBER TOOL
+    if detected_tool == "random_number":
+
+        result = run_tool(
+            "random_number"
+        )
+
+        return {
+            "response": result
+        }
+        # TERMINAL TOOL
+    if detected_tool == "run_command":
+
+        command = latest_message.replace(
+            "run command",
+            ""
+        ).strip()
+
+        result = run_tool(
+            "run_command",
+            command
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

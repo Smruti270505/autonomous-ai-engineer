@@ -1,3 +1,9 @@
+from tools.terminal_tool import run_command
+from tools.update_file_tool import update_file
+from tools.rename_file_tool import rename_file
+from tools.directory_info_tool import directory_info
+from tools.echo_tool import echo
+from tools.random_tool import random_number
 from tools.read_file_tool import read_file
 from tools.list_files_tool import list_files
 from tools.delete_file_tool import delete_file
@@ -36,5 +42,39 @@ TOOLS = {
         "function": delete_file,
         "description": "Deletes a file",
         "usage": "delete file test.py"
+    },
+        "update_file": {
+        "function": update_file,
+        "description": "Updates existing files",
+        "usage": "update file test.py"
+    },
+
+    "rename_file": {
+        "function": rename_file,
+        "description": "Renames files",
+        "usage": "rename file old.py new.py"
+    },
+
+    "directory_info": {
+        "function": directory_info,
+        "description": "Returns folder information",
+        "usage": "directory info"
+    },
+
+    "echo": {
+        "function": echo,
+        "description": "Repeats user message",
+        "usage": "echo hello"
+    },
+
+    "random_number": {
+        "function": random_number,
+        "description": "Generates random number",
+        "usage": "random number"
+    },
+        "run_command": {
+        "function": run_command,
+        "description": "Executes terminal commands",
+        "usage": "run command dir"
     }
 }
