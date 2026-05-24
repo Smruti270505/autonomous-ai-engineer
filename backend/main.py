@@ -1,3 +1,5 @@
+from tools.planner import create_plan
+from tools.executor import execute_plan
 from tools.intent_detector import detect_tool
 from tools.tool_router import run_tool
 from tools.tool_registry import TOOLS
@@ -40,6 +42,18 @@ def chat(data: ChatRequest):
 
     latest_message = data.messages[-1].content.lower()
     detected_tool = detect_tool(latest_message)
+    plan = create_plan(latest_message)
+
+    if len(plan) > 1:
+
+        result = execute_plan(
+            plan,
+            latest_message
+        )
+
+        return {
+            "response": result
+        }
     if "what tools" in latest_message or "available tools" in latest_message:
 
         tool_list = []
