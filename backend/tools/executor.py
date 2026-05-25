@@ -1,7 +1,11 @@
 from tools.memory_store import save_action
 from tools.tool_router import run_tool
 
+execution_logs = []
+
 def execute_plan(plan, message):
+
+    execution_logs.clear()
 
     results = []
 
@@ -24,21 +28,14 @@ def execute_plan(plan, message):
             )
 
             results.append(result)
+
+            execution_logs.append(
+                "Executed create_file"
+            )
+
             save_action(
                 f"Executed create_file on {filename}"
             )
-            save_action(
-                "Executed list_files"
-            )
-            save_action(
-                "Executed time tool"
-            )
-            save_action(
-                "Executed random_number"
-            )
-            save_action(
-                "Executed directory_info"
-            )           
 
         # LIST FILES
         elif tool == "list_files":
@@ -49,6 +46,14 @@ def execute_plan(plan, message):
 
             results.append(result)
 
+            execution_logs.append(
+                "Executed list_files"
+            )
+
+            save_action(
+                "Executed list_files"
+            )
+
         # TIME
         elif tool == "time":
 
@@ -57,6 +62,14 @@ def execute_plan(plan, message):
             )
 
             results.append(result)
+
+            execution_logs.append(
+                "Executed time"
+            )
+
+            save_action(
+                "Executed time tool"
+            )
 
         # RANDOM NUMBER
         elif tool == "random_number":
@@ -67,6 +80,14 @@ def execute_plan(plan, message):
 
             results.append(result)
 
+            execution_logs.append(
+                "Executed random_number"
+            )
+
+            save_action(
+                "Executed random_number"
+            )
+
         # DIRECTORY INFO
         elif tool == "directory_info":
 
@@ -76,4 +97,21 @@ def execute_plan(plan, message):
 
             results.append(result)
 
-    return "\n\n".join(results)
+            execution_logs.append(
+                "Executed directory_info"
+            )
+
+            save_action(
+                "Executed directory_info"
+            )
+
+    execution_text = "\n".join(execution_logs)
+
+    final_output = (
+        "[Execution]\n"
+        + execution_text
+        + "\n\n[Results]\n"
+        + "\n\n".join(results)
+    )
+
+    return final_output
