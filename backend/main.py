@@ -246,6 +246,16 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+        # HISTORY TOOL
+    if detected_tool == "history":
+
+        result = run_tool(
+            "history"
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

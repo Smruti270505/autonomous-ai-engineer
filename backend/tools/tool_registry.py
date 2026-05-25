@@ -1,3 +1,4 @@
+from tools.history_tool import show_history
 from tools.terminal_tool import run_command
 from tools.update_file_tool import update_file
 from tools.rename_file_tool import rename_file
@@ -76,5 +77,10 @@ TOOLS = {
         "function": run_command,
         "description": "Executes terminal commands",
         "usage": "run command dir"
+    },
+        "history": {
+        "function": show_history,
+        "description": "Shows agent action history",
+        "usage": "show history"
     }
 }

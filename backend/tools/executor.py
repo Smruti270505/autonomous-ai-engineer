@@ -1,3 +1,4 @@
+from tools.memory_store import save_action
 from tools.tool_router import run_tool
 
 def execute_plan(plan, message):
@@ -23,6 +24,21 @@ def execute_plan(plan, message):
             )
 
             results.append(result)
+            save_action(
+                f"Executed create_file on {filename}"
+            )
+            save_action(
+                "Executed list_files"
+            )
+            save_action(
+                "Executed time tool"
+            )
+            save_action(
+                "Executed random_number"
+            )
+            save_action(
+                "Executed directory_info"
+            )           
 
         # LIST FILES
         elif tool == "list_files":

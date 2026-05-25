@@ -36,4 +36,6 @@ def detect_tool(message):
         return "random_number"
     if "run command" in message:
         return "run_command"
+    if "show history" in message:
+        return "history"
     return None

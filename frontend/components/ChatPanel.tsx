@@ -73,7 +73,9 @@ export default function ChatPanel() {
                 : "bg-zinc-800"
               }`}
           >
-            {msg.content}
+            <div className="whitespace-pre-wrap">
+  {msg.content}
+</div>
           </div>
 
         ))}
