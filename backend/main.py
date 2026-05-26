@@ -1,5 +1,5 @@
+from tools.ai_planner import generate_plan
 from tools.reasoning_engine import generate_reasoning
-from tools.planner import create_plan
 from tools.executor import execute_plan
 from tools.intent_detector import detect_tool
 from tools.tool_router import run_tool
@@ -43,7 +43,17 @@ def chat(data: ChatRequest):
 
     latest_message = data.messages[-1].content.lower()
     detected_tool = detect_tool(latest_message)
-    plan = create_plan(latest_message)
+    ai_plan = generate_plan(
+        latest_message
+    )
+
+    try:
+
+        plan = eval(ai_plan)
+
+    except:
+
+        plan = []
     reasoning = generate_reasoning(plan)
     if len(plan) > 1:
      
