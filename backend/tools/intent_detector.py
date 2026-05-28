@@ -38,4 +38,14 @@ def detect_tool(message):
         return "run_command"
     if "show history" in message:
         return "history"
+    if "scan project" in message:
+        return "scan_project"
+
+    if "analyze project" in message:
+        return "analyze_project"
+    if "read code" in message:
+        return "read_code_file"
+
+    if "summarize code" in message:
+        return "summarize_code"
     return None

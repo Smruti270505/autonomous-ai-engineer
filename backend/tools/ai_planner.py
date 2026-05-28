@@ -13,7 +13,9 @@ AVAILABLE_TOOLS = [
     "list_files",
     "time",
     "random_number",
-    "directory_info"
+    "directory_info",
+    "read_code_file",
+    "summarize_code"
 ]
 
 def generate_plan(message):
@@ -26,8 +28,17 @@ Available tools:
 
 User request:
 {message}
+You must choose tools carefully.
 
-Return ONLY a Python list of tool names.
+Rules:
+- If user wants to READ source code → use read_code_file
+- If user wants code explanation/analysis → use summarize_code
+- If user wants file creation → use create_file
+- Never confuse reading with creating
+- Return ONLY a Python list
+
+Example:
+["read_code_file"]Return ONLY a Python list of tool names.
 
 Example:
 ["create_file", "list_files"]

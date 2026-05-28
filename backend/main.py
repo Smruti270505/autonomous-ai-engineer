@@ -275,6 +275,68 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+        # SCAN PROJECT TOOL
+    if detected_tool == "scan_project":
+
+        result = run_tool(
+            "scan_project"
+        )
+
+        return {
+            "response": result
+        }
+
+    # ANALYZE PROJECT TOOL
+    if detected_tool == "analyze_project":
+
+        project_structure = run_tool(
+            "scan_project"
+        )
+
+        result = run_tool(
+            "analyze_project",
+            project_structure
+        )
+
+        return {
+            "response": result
+        }
+        # READ CODE TOOL
+    if detected_tool == "read_code_file":
+
+        parts = latest_message.split()
+
+        filepath = parts[2]
+
+        result = run_tool(
+            "read_code_file",
+            filepath
+        )
+
+        return {
+            "response": result
+        }
+
+    # SUMMARIZE CODE TOOL
+    if detected_tool == "summarize_code":
+
+        parts = latest_message.split()
+
+        filepath = parts[2]
+
+        code = run_tool(
+            "read_code_file",
+            filepath
+        )
+
+        result = run_tool(
+            "summarize_code",
+            code
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

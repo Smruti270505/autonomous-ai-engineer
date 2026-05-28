@@ -1,3 +1,7 @@
+from tools.code_reader import read_code_file
+from tools.code_summarizer import summarize_code
+from tools.project_scanner import scan_project
+from tools.project_analyzer import analyze_project
 from tools.history_tool import show_history
 from tools.terminal_tool import run_command
 from tools.update_file_tool import update_file
@@ -82,5 +86,27 @@ TOOLS = {
         "function": show_history,
         "description": "Shows agent action history",
         "usage": "show history"
+    },
+        "scan_project": {
+        "function": scan_project,
+        "description": "Scans project structure",
+        "usage": "scan project"
+    },
+
+    "analyze_project": {
+        "function": analyze_project,
+        "description": "Analyzes project architecture",
+        "usage": "analyze project"
+    },
+        "read_code_file": {
+        "function": read_code_file,
+        "description": "Reads source code files",
+        "usage": "read code backend/main.py"
+    },
+
+    "summarize_code": {
+        "function": summarize_code,
+        "description": "Summarizes source code",
+        "usage": "summarize code backend/main.py"
     }
 }
