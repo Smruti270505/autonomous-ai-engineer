@@ -1,112 +1,40 @@
+```python
 from tools.memory_store import save_action
 from tools.tool_router import run_tool
+from enum import Enum
 
-execution_logs = []
+class Tools(Enum):
+    create_file = 1
+    list_files = 2
+    time = 3
+    random_number = 4
+    directory_info = 5
 
 def execute_plan(plan, message):
-
-    execution_logs.clear()
-
+    execution_logs = []
     results = []
 
     for tool in plan:
+        if not isinstance(tool, Tools):
+            raise ValueError(f"Invalid tool: {tool}")
 
-        # CREATE FILE
-        if tool == "create_file":
+        tool_name = tool.name.lower()
+        execution_logs.append(f"Executing {tool_name}")
 
+        if tool_name == "create_file":
             parts = message.split()
-
             filename = "agent_file.txt"
-
             if len(parts) >= 3:
                 filename = parts[2]
+            results.append(run_tool(tool_name, filename, "Created by autonomous planner."))
+            save_action(f"Executed create_file on {filename}")
 
-            result = run_tool(
-                "create_file",
-                filename,
-                "Created by autonomous planner."
-            )
-
+        elif tool_name in ["list_files", "time", "random_number", "directory_info"]:
+            result = run_tool(tool_name)
             results.append(result)
-
-            execution_logs.append(
-                "Executed create_file"
-            )
-
-            save_action(
-                f"Executed create_file on {filename}"
-            )
-
-        # LIST FILES
-        elif tool == "list_files":
-
-            result = run_tool(
-                "list_files"
-            )
-
-            results.append(result)
-
-            execution_logs.append(
-                "Executed list_files"
-            )
-
-            save_action(
-                "Executed list_files"
-            )
-
-        # TIME
-        elif tool == "time":
-
-            result = run_tool(
-                "time"
-            )
-
-            results.append(result)
-
-            execution_logs.append(
-                "Executed time"
-            )
-
-            save_action(
-                "Executed time tool"
-            )
-
-        # RANDOM NUMBER
-        elif tool == "random_number":
-
-            result = run_tool(
-                "random_number"
-            )
-
-            results.append(result)
-
-            execution_logs.append(
-                "Executed random_number"
-            )
-
-            save_action(
-                "Executed random_number"
-            )
-
-        # DIRECTORY INFO
-        elif tool == "directory_info":
-
-            result = run_tool(
-                "directory_info"
-            )
-
-            results.append(result)
-
-            execution_logs.append(
-                "Executed directory_info"
-            )
-
-            save_action(
-                "Executed directory_info"
-            )
+            save_action(f"Executed {tool_name}")
 
     execution_text = "\n".join(execution_logs)
-
     final_output = (
         "[Execution]\n"
         + execution_text
@@ -115,3 +43,4 @@ def execute_plan(plan, message):
     )
 
     return final_output
+```

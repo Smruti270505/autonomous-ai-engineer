@@ -1,3 +1,5 @@
+from tools.code_editor import overwrite_code
+from tools.code_improver import improve_code
 from tools.code_reader import read_code_file
 from tools.code_summarizer import summarize_code
 from tools.project_scanner import scan_project
@@ -108,5 +110,16 @@ TOOLS = {
         "function": summarize_code,
         "description": "Summarizes source code",
         "usage": "summarize code backend/main.py"
+    },
+        "overwrite_code": {
+        "function": overwrite_code,
+        "description": "Overwrites source code files",
+        "usage": "overwrite code main.py"
+    },
+
+    "improve_code": {
+        "function": improve_code,
+        "description": "Improves source code intelligently",
+        "usage": "improve code main.py"
     }
 }

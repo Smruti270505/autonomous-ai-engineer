@@ -48,4 +48,6 @@ def detect_tool(message):
 
     if "summarize code" in message:
         return "summarize_code"
+    if "improve code" in message:
+        return "improve_code"
     return None

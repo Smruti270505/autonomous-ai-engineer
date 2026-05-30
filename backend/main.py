@@ -337,6 +337,35 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+        # IMPROVE CODE TOOL
+    if detected_tool == "improve_code":
+
+        parts = latest_message.split()
+
+        filepath = parts[2]
+
+        original_code = run_tool(
+            "read_code_file",
+            filepath
+        )
+
+        improved_code = run_tool(
+            "improve_code",
+            original_code
+        )
+
+        result = run_tool(
+            "overwrite_code",
+            filepath,
+            improved_code
+        )
+
+        return {
+            "response": (
+                result
+                + "\n\nCode improved successfully."
+            )
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
