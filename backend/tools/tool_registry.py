@@ -1,3 +1,7 @@
+from tools.error_runner import run_python_file
+from tools.self_heal import self_heal
+from tools.debug_analyzer import analyze_bugs
+from tools.bug_fixer import fix_bugs
 from tools.code_editor import overwrite_code
 from tools.code_improver import improve_code
 from tools.code_reader import read_code_file
@@ -121,5 +125,27 @@ TOOLS = {
         "function": improve_code,
         "description": "Improves source code intelligently",
         "usage": "improve code main.py"
+    },
+        "analyze_bugs": {
+        "function": analyze_bugs,
+        "description": "Analyzes code for bugs",
+        "usage": "analyze bugs tools/executor.py"
+    },
+
+    "fix_bugs": {
+        "function": fix_bugs,
+        "description": "Fixes bugs automatically",
+        "usage": "fix bugs tools/executor.py"
+    },
+        "run_python_file": {
+        "function": run_python_file,
+        "description": "Runs Python files and captures errors",
+        "usage": "run python main.py"
+    },
+
+    "self_heal": {
+        "function": self_heal,
+        "description": "Automatically fixes broken Python files",
+        "usage": "self heal main.py"
     }
 }

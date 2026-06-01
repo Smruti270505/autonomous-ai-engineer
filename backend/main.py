@@ -366,6 +366,70 @@ def chat(data: ChatRequest):
                 + "\n\nCode improved successfully."
             )
         }
+        # ANALYZE BUGS TOOL
+    if detected_tool == "analyze_bugs":
+
+        parts = latest_message.split()
+
+        filepath = parts[-1]
+
+        code = run_tool(
+            "read_code_file",
+            filepath
+        )
+
+        result = run_tool(
+            "analyze_bugs",
+            code
+        )
+
+        return {
+            "response": result
+        }
+
+    # FIX BUGS TOOL
+    if detected_tool == "fix_bugs":
+
+        parts = latest_message.split()
+
+        filepath = parts[-1]
+
+        original_code = run_tool(
+            "read_code_file",
+            filepath
+        )
+
+        fixed_code = run_tool(
+            "fix_bugs",
+            original_code
+        )
+
+        overwrite_result = run_tool(
+            "overwrite_code",
+            filepath,
+            fixed_code
+        )
+
+        return {
+            "response":
+            overwrite_result
+            + "\n\nBugs fixed successfully."
+        }
+        # SELF HEAL TOOL
+    if detected_tool == "self_heal":
+
+        parts = latest_message.split()
+
+        filepath = parts[-1]
+
+        result = run_tool(
+            "self_heal",
+            filepath
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

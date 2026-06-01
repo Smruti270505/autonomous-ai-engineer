@@ -50,4 +50,14 @@ def detect_tool(message):
         return "summarize_code"
     if "improve code" in message:
         return "improve_code"
+    if "analyze bugs" in message:
+        return "analyze_bugs"
+
+    if "fix bugs" in message:
+        return "fix_bugs"
+
+    if "debug file" in message:
+        return "fix_bugs"
+    if "self heal" in message:
+        return "self_heal"
     return None
