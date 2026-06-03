@@ -1,3 +1,7 @@
+from tools.vector_memory import (
+    store_memory,
+    search_memory
+)
 from tools.error_runner import run_python_file
 from tools.self_heal import self_heal
 from tools.debug_analyzer import analyze_bugs
@@ -147,5 +151,16 @@ TOOLS = {
         "function": self_heal,
         "description": "Automatically fixes broken Python files",
         "usage": "self heal main.py"
+    },
+        "store_memory": {
+        "function": store_memory,
+        "description": "Stores semantic memory",
+        "usage": "store memory AI architecture"
+    },
+
+    "search_memory": {
+        "function": search_memory,
+        "description": "Searches semantic memories",
+        "usage": "search memory architecture"
     }
 }

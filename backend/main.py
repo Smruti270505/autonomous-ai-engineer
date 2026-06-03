@@ -430,6 +430,39 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+        # STORE MEMORY TOOL
+    if detected_tool == "store_memory":
+
+        memory_text = latest_message.replace(
+            "store memory",
+            ""
+        ).strip()
+
+        result = run_tool(
+            "store_memory",
+            memory_text
+        )
+
+        return {
+            "response": result
+        }
+
+    # SEARCH MEMORY TOOL
+    if detected_tool == "search_memory":
+
+        query = latest_message.replace(
+            "search memory",
+            ""
+        ).strip()
+
+        result = run_tool(
+            "search_memory",
+            query
+        )
+
+        return {
+            "response": result
+        }
     # NORMAL AI CHAT
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

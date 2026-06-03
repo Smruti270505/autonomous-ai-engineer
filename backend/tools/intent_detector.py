@@ -60,4 +60,9 @@ def detect_tool(message):
         return "fix_bugs"
     if "self heal" in message:
         return "self_heal"
+    if "store memory" in message:
+        return "store_memory"
+
+    if "search memory" in message:
+        return "search_memory"
     return None
