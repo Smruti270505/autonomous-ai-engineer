@@ -463,39 +463,57 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+
+    # MULTI AGENT TOOL
+    if detected_tool == "multi_agent":
+
+        task = latest_message.replace(
+            "multi agent",
+            ""
+        ).strip()
+
+        result = run_tool(
+            "multi_agent",
+            task
+        )
+
+        return {
+            "response": result
+        }
+
     # NORMAL AI CHAT
     memory_context = run_tool(
-    "retrieve_context",
-    latest_message
-)
+        "retrieve_context",
+        latest_message
+    )
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
-    {
-        "role": "system",
-        "content":
-        f"""
+            {
+                "role": "system",
+                "content":
+                f"""
 Relevant project memory:
 
 {memory_context}
 
 Use this memory if helpful.
 """
-    }
-] + [
-    {
-        "role": msg.role,
-        "content": msg.content
-    }
-    for msg in data.messages
-]
+            }
+        ] + [
+            {
+                "role": msg.role,
+                "content": msg.content
+            }
+            for msg in data.messages
+        ]
     )
 
     ai_reply = response.choices[0].message.content
     run_tool(
-    "store_memory",
-    ai_reply
-)
+        "store_memory",
+        ai_reply
+    )
 
     return {
         "response": ai_reply

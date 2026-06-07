@@ -2,6 +2,8 @@ from tools.vector_memory import (
     store_memory,
     search_memory
 )
+
+from tools.agents.orchestrator import run_multi_agent
 from tools.memory_retriever import retrieve_context
 from tools.error_runner import run_python_file
 from tools.self_heal import self_heal
@@ -168,5 +170,10 @@ TOOLS = {
     "function": retrieve_context,
     "description": "Retrieves relevant memories",
     "usage": "retrieve context"
+},
+"multi_agent": {
+    "function": run_multi_agent,
+    "description": "Runs planner, coder and reviewer agents",
+    "usage": "multi agent build login page"
 }
 }

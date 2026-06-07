@@ -65,4 +65,6 @@ def detect_tool(message):
 
     if "search memory" in message:
         return "search_memory"
+    if "multi agent" in message:
+        return "multi_agent"
     return None
