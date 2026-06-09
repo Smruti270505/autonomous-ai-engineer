@@ -480,6 +480,15 @@ def chat(data: ChatRequest):
         return {
             "response": result
         }
+    if detected_tool == "dependency_mapper":
+
+     result = run_tool(
+        "dependency_mapper"
+    )
+
+    return {
+        "response": result
+    }
 
     # NORMAL AI CHAT
     memory_context = run_tool(

@@ -67,4 +67,6 @@ def detect_tool(message):
         return "search_memory"
     if "multi agent" in message:
         return "multi_agent"
+    if "dependency map" in message:
+        return "dependency_mapper"
     return None

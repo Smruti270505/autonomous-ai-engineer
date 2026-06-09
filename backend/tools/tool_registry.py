@@ -2,7 +2,7 @@ from tools.vector_memory import (
     store_memory,
     search_memory
 )
-
+from tools.dependency_mapper import dependency_mapper
 from tools.agents.orchestrator import run_multi_agent
 from tools.memory_retriever import retrieve_context
 from tools.error_runner import run_python_file
@@ -175,5 +175,10 @@ TOOLS = {
     "function": run_multi_agent,
     "description": "Runs planner, coder and reviewer agents",
     "usage": "multi agent build login page"
+},
+"dependency_mapper": {
+    "function": dependency_mapper,
+    "description": "Maps project dependencies",
+    "usage": "dependency map"
 }
 }
