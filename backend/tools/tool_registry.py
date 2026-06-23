@@ -2,6 +2,9 @@ from tools.vector_memory import (
     store_memory,
     search_memory
 )
+from tools.syntax_checker import check_syntax
+from tools.backup_tool import create_backup
+from tools.restore_tool import restore_backup
 from tools.dependency_mapper import dependency_mapper
 from tools.agents.orchestrator import run_multi_agent
 from tools.memory_retriever import retrieve_context
@@ -180,5 +183,18 @@ TOOLS = {
     "function": dependency_mapper,
     "description": "Maps project dependencies",
     "usage": "dependency map"
+},
+"backup_file": {
+    "function": create_backup,
+    "description": "Creates backup of a file"
+},
+
+"restore_backup": {
+    "function": restore_backup,
+    "description": "Restores backup"
+},
+"check_syntax": {
+    "function": check_syntax,
+    "description": "Checks Python syntax"
 }
 }

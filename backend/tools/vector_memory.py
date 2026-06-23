@@ -1,19 +1,40 @@
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
+import pickle
+import os
 
 model = SentenceTransformer(
     "all-MiniLM-L6-v2"
 )
 
 memory_texts = []
+MEMORY_FILE = "memory.pkl"
 
 dimension = 384
 
 index = faiss.IndexFlatL2(
     dimension
 )
+if os.path.exists(MEMORY_FILE):
 
+    with open(
+        MEMORY_FILE,
+        "rb"
+    ) as f:
+
+        memory_texts = pickle.load(f)
+
+        embeddings = model.encode(
+            memory_texts
+        )
+
+        vector = np.array(
+            embeddings,
+            dtype="float32"
+        )
+
+        index.add(vector)
 def store_memory(text):
 
     embedding = model.encode([text])
@@ -26,6 +47,16 @@ def store_memory(text):
     index.add(vector)
 
     memory_texts.append(text)
+
+    with open(
+    MEMORY_FILE,
+    "wb"
+) as f:
+
+     pickle.dump(
+        memory_texts,
+        f
+    )
 
     return "Memory stored."
 

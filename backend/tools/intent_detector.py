@@ -69,4 +69,12 @@ def detect_tool(message):
         return "multi_agent"
     if "dependency map" in message:
         return "dependency_mapper"
+    if "backup" in message:
+        return "backup_file"
+
+    if "restore" in message:
+        return "restore_backup"
+
+    if "check syntax" in message:
+        return "check_syntax"
     return None

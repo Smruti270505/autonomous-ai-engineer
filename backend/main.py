@@ -482,11 +482,26 @@ def chat(data: ChatRequest):
         }
     if detected_tool == "dependency_mapper":
 
-     result = run_tool(
+         result = run_tool(
         "dependency_mapper"
     )
 
-    return {
+         return {
+        "response": result
+    }
+    if detected_tool == "backup_file":
+
+     filename = latest_message.replace(
+        "backup",
+        ""
+    ).strip()
+
+     result = run_tool(
+        "backup_file",
+        filename
+    )
+
+     return {
         "response": result
     }
 
