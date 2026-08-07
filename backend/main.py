@@ -542,3 +542,40 @@ Use this memory if helpful.
     return {
         "response": ai_reply
     }
+import os
+from fastapi import FastAPI
+
+@app.get("/files")
+def get_files():
+
+    files = []
+
+    for root, dirs, filenames in os.walk("."):
+
+        dirs[:] = [
+            d for d in dirs
+            if d not in [
+                "venv",
+                "node_modules",
+                "__pycache__",
+                ".git",
+                ".next"
+            ]
+        ]
+
+        for file in filenames:
+
+            path = os.path.join(root, file)
+
+            files.append(path)
+
+    return files
+@app.get("/file")
+def read_file(path: str):
+
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    return {
+        "content": content
+    }

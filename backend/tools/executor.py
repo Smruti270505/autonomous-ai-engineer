@@ -10,12 +10,24 @@ class Tools(Enum):
     RANDOM_NUMBER = 4
     DIRECTORY_INFO = 5
 
+
 def execute_plan(plan, message):
     execution_logs = []
     results = []
 
     for tool in plan:
         if not isinstance(tool, Tools):
+            if tool == "read_code_file":
+                parts = message.split() if message else []
+                filename = "main.py"
+                if len(parts) >= 3:
+                    filename = parts[-1]
+
+                result = run_tool("code_reader", filename)
+                results.append(result)
+                execution_logs.append("Executing read_code_file")
+                continue
+
             raise ValueError(f"Invalid tool: {tool} ({type(tool)})")
 
         execution_logs.append(f"Executing {tool.name}")
